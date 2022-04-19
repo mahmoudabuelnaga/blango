@@ -27,7 +27,7 @@
             <p>{{ post.summary }}</p>
             <p>
                 ({{ post.content|wordcount }} words)
-                <a href="#">Read More</a>
+                <a href="{% url 'post_detail' pk=post.id %}">Read More</a>
             </p>
         </div>
     </div>
