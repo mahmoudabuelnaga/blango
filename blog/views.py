@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def index(request):
   from django.http import HttpResponse
   return HttpResponse(str(request.user).encode("ascii"))
-  posts = Post.objects.filter(published_at__lte=timezone.now())
+  posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
   logger.debug("Got %d posts", len(posts))
   return render(request, "blog/index.html", {'posts':posts})
 
@@ -37,3 +37,8 @@ def post_detail(request, pk=None):
     comment_form = None
   
   return render(request, "blog/post-detail.html", {"post": post, "comment_form": comment_form})
+
+def get_ip(request):
+  from django.http import HttpResponse
+  print(HttpResponse(request.META['REMOTE_ADDR']))
+  return HttpResponse(request.META['REMOTE_ADDR'])
