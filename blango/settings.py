@@ -155,6 +155,15 @@ class Dev(Configuration):
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+
+    PASSWORD_HASHERS = [
+      'django.contrib.auth.hashers.Argon2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    ]
+
+
 class Prod(Dev):
     DEBUG = False
     # SECRET_KEY = values.SecretValue("django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-")
