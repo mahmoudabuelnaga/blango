@@ -5,15 +5,31 @@ from blog.forms import CommentForm
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 import logging
+from datetime import timedelta
+from django.conf import settings
+from django.utils import timezone
+from blango_auth.models import User
 
 logger = logging.getLogger(__name__)
 
 # Create your views here.
+# from datetime import timedelta
+
+# from django.conf import settings
+# from django.utils import timezone
+
+# from blango_auth.models import User
+# User.objects.filter(
+#     is_active=False,
+#     date_joined__lt=timezone.now() - timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+# ).delete()
+
 @cache_page(300)
 @vary_on_headers("Cookie")
 def index(request):
   from django.http import HttpResponse
-  return HttpResponse(str(request.user).encode("ascii"))
+  # return HttpResponse(str(request.user).encode("ascii"))
+  User.objects.filter(is_active=False, date_joined__lt=timezone.now() - timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)).delete()
   posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
   logger.debug("Got %d posts", len(posts))
   return render(request, "blog/index.html", {'posts':posts})

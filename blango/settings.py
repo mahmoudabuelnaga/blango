@@ -38,6 +38,7 @@ class Dev(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
+        'blango_auth',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -45,7 +46,7 @@ class Dev(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'blog.apps.BlogConfig',
-        'blango_auth',
+        
         'crispy_forms',
         'crispy_bootstrap5',
         # other existing settings truncated for brevity
@@ -173,6 +174,12 @@ class Dev(Configuration):
     ]
 
     AUTH_USER_MODEL = "blango_auth.User"
+
+    ACCOUNT_ACTIVATION_DAYS = 7
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+    # REGISTRATION_OPEN = False
 
 class Prod(Dev):
     DEBUG = False
