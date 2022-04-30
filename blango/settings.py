@@ -44,6 +44,7 @@ class Dev(Configuration):
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
+        "django.contrib.sites",
         'django.contrib.staticfiles',
         'blog.apps.BlogConfig',
         
@@ -51,6 +52,11 @@ class Dev(Configuration):
         'crispy_bootstrap5',
         # other existing settings truncated for brevity
         "debug_toolbar",
+
+        "allauth",
+        "allauth.account",
+        "allauth.socialaccount",
+        "allauth.socialaccount.providers.google",
 
     ]
 
@@ -180,6 +186,14 @@ class Dev(Configuration):
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
     # REGISTRATION_OPEN = False
+
+    SITE_ID = 1
+
+
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 class Prod(Dev):
     DEBUG = False
